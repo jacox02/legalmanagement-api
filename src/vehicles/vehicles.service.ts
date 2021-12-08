@@ -1,45 +1,74 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../entities/Users.entity';
+import { Vehicle } from '../entities/Vehicles.entity';
 import { Connection } from 'typeorm';
 
 @Injectable()
 export class VehiclesService {
   constructor(private connection: Connection) {}
-  async createMany(users: User[]) {
+  async createMany(vehicles: Vehicle[]) {
     const queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      await queryRunner.manager.save(users[0]);
-      await queryRunner.manager.save(users[1]);
+      await vehicles.map(async (vehicle) => {
+        await queryRunner.manager.save(vehicle);
+      });
 
       await queryRunner.commitTransaction();
     } catch (err) {
-      // since we have errors lets rollback the changes we made
       await queryRunner.rollbackTransaction();
     } finally {
-      // you need to release a queryRunner which was manually instantiated
+      await queryRunner.release();
+    }
+  }
+  async insertVehicle(vehicle: Vehicle) {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.save(vehicle);
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+  }
+  async getAll(): Promise<Vehicle[]> {
+    let userList: Vehicle[];
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      userList = await queryRunner.manager.find(Vehicle);
+      await queryRunner.commitTransaction();
+      return userList;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
       await queryRunner.release();
     }
   }
 
-  async getAll() {
+  async findOne(id: string): Promise<Vehicle> {
+    let vehicle: Vehicle;
     const queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      await queryRunner.manager.find(User);
-
+      vehicle = await queryRunner.manager.findOne(id);
       await queryRunner.commitTransaction();
+      console.log(vehicle);
+      return vehicle;
     } catch (err) {
-      // since we have errors lets rollback the changes we made
       await queryRunner.rollbackTransaction();
     } finally {
-      // you need to release a queryRunner which was manually instantiated
       await queryRunner.release();
     }
   }

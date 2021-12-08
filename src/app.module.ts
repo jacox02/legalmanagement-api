@@ -6,9 +6,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Connection } from 'typeorm';
 
-import { UsersController } from './user/user.controller';
-import { UsersService } from './user/user.service';
-import { UsersModule } from './user/user.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 import { VehiclesController } from './vehicles/vehicles.controller';
 import { VehiclesService } from './vehicles/vehicles.service';
@@ -20,7 +20,7 @@ import { VehicleBrands } from './entities/VehicleBrands.entity';
 import { VehicleModels } from './entities/VehicleModels.entity';
 import { VehicleTypes } from './entities/VehicleTypes.entity';
 import { ScheduledMeets } from './entities/ScheduledMeets.entity';
-import { Images } from './entities/Images.entity';
+import { Photo } from './entities/Photo.entity';
 @Module({
   imports: [
     UsersModule,
@@ -43,9 +43,9 @@ import { Images } from './entities/Images.entity';
         VehicleModels,
         VehicleTypes,
         ScheduledMeets,
-        Images,
+        Photo,
       ],
-      synchronize: false,
+      synchronize: true,
       retryAttempts: 10,
       autoLoadEntities: true,
     }),

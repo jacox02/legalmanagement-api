@@ -9,6 +9,15 @@ export class User {
   firstName: string;
 
   @Column()
+  password: string;
+
+  @Column()
+  mainEmail: string;
+
+  @Column()
+  recoveryEmail: string;
+
+  @Column()
   lastName: string;
 
   @Column({ default: true })
