@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Brand } from './VehicleBrands.entity';
 
 @Entity()
-export class VehicleModels {
+export class Model {
   @PrimaryGeneratedColumn()
   ModelID: number;
   @Column()
@@ -10,4 +11,7 @@ export class VehicleModels {
   ModelCode: string;
   @Column()
   ModelName: string;
+
+  // @ManyToOne(() => Brand, (brand) => brand.Models)
+  // brand: Brand;
 }

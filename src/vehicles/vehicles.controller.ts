@@ -6,14 +6,6 @@ import { Vehicle } from '../entities/Vehicles.entity';
 export class VehiclesController {
   constructor(private readonly vehicleService: VehiclesService) {}
 
-  @Get()
-  @HttpCode(200)
-  async getHello(@Param() params): Promise<any> {
-    console.log(params);
-    let data = 'Hello';
-    return data;
-  }
-
   @Get('/get/all')
   @HttpCode(200)
   async getAll(@Param() params): Promise<any> {
@@ -23,8 +15,14 @@ export class VehiclesController {
 
   @Post('/create')
   @HttpCode(200)
-  async createUser(@Param() params, @Body() vehicle): Promise<any> {
+  async createVehicle(@Param() params, @Body() vehicle): Promise<any> {
     return this.vehicleService.insertVehicle(vehicle);
+  }
+
+  @Post('/createmany')
+  @HttpCode(200)
+  async createVehicleFromArray(@Param() params, @Body() vehicle): Promise<any> {
+    return this.vehicleService.createMany(vehicle);
   }
 
   @Get('/get/:id')

@@ -1,5 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Photo } from './Photo.entity';
+import { Brand } from './VehicleBrands.entity';
 
 @Entity()
 export class Vehicle {
@@ -19,6 +28,6 @@ export class Vehicle {
   VehicleOnRent: boolean;
   @Column({ default: false })
   VehicleDescription: string;
-  // @OneToMany(() => Photo, (photo) => photo.vehicle)
-  // photos?: Photo[];
+  @ManyToOne(() => Photo, (photo) => photo.vehicle)
+  photos?: Photo[];
 }

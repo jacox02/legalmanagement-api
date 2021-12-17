@@ -16,8 +16,8 @@ import { VehiclesModule } from './vehicles/vehicles.module';
 
 import { User } from './entities/Users.entity';
 import { Vehicle } from './entities/Vehicles.entity';
-import { VehicleBrands } from './entities/VehicleBrands.entity';
-import { VehicleModels } from './entities/VehicleModels.entity';
+import { Brand } from './entities/VehicleBrands.entity';
+import { Model } from './entities/VehicleModels.entity';
 import { VehicleTypes } from './entities/VehicleTypes.entity';
 import { ScheduledMeets } from './entities/ScheduledMeets.entity';
 import { Photo } from './entities/Photo.entity';
@@ -39,8 +39,8 @@ import { Photo } from './entities/Photo.entity';
       entities: [
         User,
         Vehicle,
-        VehicleBrands,
-        VehicleModels,
+        Brand,
+        Model,
         VehicleTypes,
         ScheduledMeets,
         Photo,
@@ -48,6 +48,7 @@ import { Photo } from './entities/Photo.entity';
       synchronize: true,
       retryAttempts: 10,
       autoLoadEntities: true,
+      cache: true,
     }),
   ],
   controllers: [AppController, UsersController, VehiclesController],

@@ -7,13 +7,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getServerAvaliablity(): string {
+    return this.appService.getServerAvaliablity();
   }
 
-  @UseGuards(AuthGuard('local'))
-  @Post('auth/login')
-  async login(@Request() req) {
-    return req.user;
-  }
+  // @UseGuards(AuthGuard('local'))
+  // @Post('auth/login')
+  // async login(@Request() req) {
+  //   return req.user;
+  // }
 }

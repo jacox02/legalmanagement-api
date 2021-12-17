@@ -1,11 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Model } from './VehicleModels.entity';
 
 @Entity()
-export class VehicleBrands {
+export class Brand {
   @PrimaryGeneratedColumn()
   BrandID: number;
   @Column()
   BrandCode: string;
   @Column()
   BrandName: string;
+  @Column()
+  Models: string[];
+
+  @OneToMany(() => Model, (models) => models.brand)
+  models: Model[];
 }
