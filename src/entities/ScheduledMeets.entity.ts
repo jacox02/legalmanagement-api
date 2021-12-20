@@ -1,13 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
-@Entity()
-export class ScheduledMeets {
-  @PrimaryGeneratedColumn()
+import { Column, Model, Table } from 'sequelize-typescript';
+@Table
+export class ScheduledMeet extends Model {
+  @Column({ primaryKey: true })
   MeetID: number;
-  @Column()
+  @Column
   VehicleID: number;
-  @Column()
+  @Column
   VisitorID: number;
-  @Column()
-  MeetingDate: Date;
+  @Column
+  MeetingDate: number;
 }

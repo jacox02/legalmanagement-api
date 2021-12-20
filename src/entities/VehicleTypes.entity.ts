@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Model, Table } from 'sequelize-typescript';
 
-@Entity()
-export class VehicleTypes {
-  @PrimaryGeneratedColumn()
+@Table
+export class VehicleTypes extends Model {
+  @Column({ primaryKey: true })
   VehicleTypeID: number;
-  @Column()
+  @Column
   VehicleTypeName: string;
 }

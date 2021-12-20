@@ -1,6 +1,5 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
-import { Vehicle } from '../entities/Vehicles.entity';
 
 @Controller()
 export class VehiclesController {
@@ -9,24 +8,24 @@ export class VehiclesController {
   @Get('/get/all')
   @HttpCode(200)
   async getAll(@Param() params): Promise<any> {
-    let data = await this.vehicleService.getAll();
+    const data = await this.vehicleService.getAll();
     return data;
   }
 
   @Post('/create')
   @HttpCode(200)
   async createVehicle(@Param() params, @Body() vehicle): Promise<any> {
-    return this.vehicleService.insertVehicle(vehicle);
+    // return this.vehicleService.insertVehicle(vehicle);
   }
 
   @Post('/createmany')
   @HttpCode(200)
   async createVehicleFromArray(@Param() params, @Body() vehicle): Promise<any> {
-    return this.vehicleService.createMany(vehicle);
+    // return this.vehicleService.createMany(vehicle);
   }
 
   @Get('/get/:id')
   async getVehicle(@Param('id') id: string) {
-    return this.vehicleService.findOne(id);
+    return this.vehicleService.findVehicleBy(id);
   }
 }

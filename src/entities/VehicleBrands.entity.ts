@@ -1,17 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Model } from './VehicleModels.entity';
-
-@Entity()
-export class Brand {
-  @PrimaryGeneratedColumn()
+import { Column, Model, Table } from 'sequelize-typescript';
+@Table
+export class Brand extends Model {
+  @Column({ primaryKey: true })
   BrandID: number;
-  @Column()
+  @Column
   BrandCode: string;
-  @Column()
+  @Column
   BrandName: string;
-  @Column()
-  Models: string[];
-
-  @OneToMany(() => Model, (models) => models.brand)
-  models: Model[];
 }

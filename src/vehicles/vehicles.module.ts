@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserSchema } from '../schemas/user.schema';
-import { VehiclesController } from './vehicles.controller';
+
 import { VehiclesService } from './vehicles.service';
-import { VehiclesSubscriber } from './vehicles.subscriber';
+import { VehiclesController } from './vehicles.controller';
+
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Vehicle } from 'src/entities/Vehicles.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserSchema])],
-  providers: [VehiclesService, VehiclesSubscriber],
+  imports: [SequelizeModule.forFeature([Vehicle])],
+  providers: [VehiclesService],
   controllers: [VehiclesController],
 })
 export class VehiclesModule {}

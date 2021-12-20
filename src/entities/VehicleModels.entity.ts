@@ -1,17 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Model, Table } from 'sequelize-typescript';
 import { Brand } from './VehicleBrands.entity';
 
-@Entity()
-export class Model {
-  @PrimaryGeneratedColumn()
+@Table
+export class VehicleModel extends Model {
+  @Column({ primaryKey: true })
   ModelID: number;
-  @Column()
-  BrandID: number;
-  @Column()
+  @Column
   ModelCode: string;
-  @Column()
+  @Column
   ModelName: string;
+  @Column
+  BrandID: string;
 
-  // @ManyToOne(() => Brand, (brand) => brand.Models)
-  // brand: Brand;
+  // @ManyToOne(() => Vehicle, (vehicle) => vehicle.BrandID)
+  // vehicle: Vehicle[];
 }

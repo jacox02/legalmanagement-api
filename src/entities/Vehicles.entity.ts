@@ -1,33 +1,34 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
-  ManyToMany,
-  ManyToOne,
-} from 'typeorm';
-import { Photo } from './Photo.entity';
-import { Brand } from './VehicleBrands.entity';
+import { Column, Model, Table } from 'sequelize-typescript';
 
-@Entity()
-export class Vehicle {
-  @PrimaryGeneratedColumn()
+import { Brand } from './VehicleBrands.entity';
+import { VehicleModel } from './VehicleModels.entity';
+import { VehicleTypes } from './VehicleTypes.entity';
+@Table
+export class Vehicle extends Model {
+  @Column({ primaryKey: true })
   VehicleID: number;
-  @Column({ default: 0 })
-  VehicleBrandID: number;
-  @Column({ default: 0 })
-  VehicleModelID: number;
-  @Column({ default: 1 })
+
+  @Column
   VehicleTypeID: number;
-  @Column({ default: 1999 })
+
+  @Column
   VehicleYear: number;
-  @Column({ default: 999999 })
+
+  @Column
   VehiclePrice: number;
-  @Column({ default: false })
+
+  @Column
   VehicleOnRent: boolean;
-  @Column({ default: false })
+
+  @Column
   VehicleDescription: string;
-  @ManyToOne(() => Photo, (photo) => photo.vehicle)
-  photos?: Photo[];
+
+  @Column
+  BrandID: number;
+
+  @Column
+  vehicleType: number;
+
+  @Column
+  VehicleModelID: number;
 }
