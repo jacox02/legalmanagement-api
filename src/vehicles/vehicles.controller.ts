@@ -58,9 +58,12 @@ export class VehiclesController {
   async getVehicleByCategory(
     @Param('categoryId') categoryId: string,
   ): Promise<any> {
-    const vehicles = await this.vehicleService.findVehicleByCategory(
-      categoryId,
-    );
+    let vehicles: Vehicle[];
+
+    vehicles = await this.vehicleService
+      .findVehicleByCategory(categoryId)
+      .then((response) => response);
+
     return vehicles;
   }
 

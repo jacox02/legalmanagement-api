@@ -33,8 +33,9 @@ import { PhotosModule } from './photos/photos.module';
       username: 'root',
       password: '5GES85RJFFULX',
       autoLoadModels: true,
+      logging: true,
       port: 3306,
-      synchronize: true,
+      // synchronize: true,
       // sync: {
       //   force: true,
       // },

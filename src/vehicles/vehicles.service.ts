@@ -67,10 +67,18 @@ export class VehiclesService {
   }
   async findVehicleByCategory(categoryID: string) {
     try {
-      const foundVehicles = await this.vehicleModel.findAll({
-        where: { TypeID: categoryID },
-        include: this.getVehicleDataParams,
-      });
+      let foundVehicles: Vehicle[] = [];
+      if (categoryID != '2') {
+        foundVehicles = await this.vehicleModel.findAll({
+          where: { TypeID: categoryID },
+          include: this.getVehicleDataParams,
+        });
+      } else {
+        foundVehicles = await this.vehicleModel.findAll({
+          where: { TypeID: categoryID, VehicleOnRent: '0' },
+          include: this.getVehicleDataParams,
+        });
+      }
       return foundVehicles;
     } catch (error) {
       console.log(`Error: ${error}`);

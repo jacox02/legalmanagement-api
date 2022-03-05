@@ -9,16 +9,20 @@ async function bootstrap() {
     cors: true,
     logger: ['error', 'warn'],
   });
+
   app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Dealer API example')
     .setDescription('The Dealer API description')
     .setVersion('1.0')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
+  console.clear();
   console.log(`App listening in port: ${port}`);
 }
 bootstrap();
