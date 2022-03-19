@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 
 import { User } from './entities/Users.model';
 import { Vehicle } from './entities/Vehicles.model';
@@ -18,8 +20,24 @@ import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { PhotosModule } from './photos/photos.module';
 
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { join } from 'path';
+
+import configuration from './config/configuration';
+
 @Module({
+  controllers: [AppController],
+  providers: [AppService],
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+      load: [configuration],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     UsersModule,
     VehiclesModule,
     PhotosModule,
@@ -29,35 +47,36 @@ import { PhotosModule } from './photos/photos.module';
     VehicleTypesModule,
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'localhost',
-      username: 'root',
-      password: '5GES85RJFFULX',
+      host: 'blackout-dealer-database.ck4xhi6sphki.us-east-1.rds.amazonaws.com',
+      username: 'admin',
+      password: 'SIsi11--',
       autoLoadModels: true,
-      logging: true,
       port: 3306,
+      logQueryParameters: false,
+      database: 'blackoutdb',
+      models: [
+        Brand,
+        VehicleModel,
+        VehicleTypes,
+        User,
+        Vehicle,
+        ScheduledMeet,
+        Photo,
+      ],
+      logging: true,
       // synchronize: true,
       // sync: {
       //   force: true,
       // },
-      logQueryParameters: false,
-      database: 'blackoutdatabase',
-      models: [
-        User,
-        Vehicle,
-        Brand,
-        VehicleModel,
-        VehicleTypes,
-        ScheduledMeet,
-        Photo,
-      ],
     }),
-    RouterModule.register([{ path: 'users', module: UsersModule }]),
-    RouterModule.register([{ path: 'vehicles', module: VehiclesModule }]),
-    RouterModule.register([{ path: 'photos', module: PhotosModule }]),
-    RouterModule.register([{ path: 'brands', module: BrandsModule }]),
-    RouterModule.register([{ path: 'models', module: ModelsModule }]),
     RouterModule.register([
+      { path: 'users', module: UsersModule },
+      { path: 'vehicles', module: VehiclesModule },
       { path: 'vehicletypes', module: VehicleTypesModule },
+      { path: 'photos', module: PhotosModule },
+      { path: 'brands', module: BrandsModule },
+      { path: 'models', module: ModelsModule },
+      { path: '', module: AppModule },
     ]),
   ],
 })

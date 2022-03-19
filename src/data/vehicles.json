@@ -1,0 +1,129 @@
+[
+  {
+    "VehicleID": 1,
+    "VehicleYear": 2019,
+    "VehiclePrice": 35000,
+    "VehicleOnRent": false,
+    "VehicleDescription": "On Sale",
+    "BrandID": 11,
+    "TypeID": 1,
+    "ModelID": 264,
+    "Brand": {
+      "BrandName": "Chevrolet"
+    },
+    "Model": {
+      "ModelName": "Lumina APV"
+    },
+    "Type": {
+      "VehicleTypeID": 1,
+      "VehicleTypeName": "On Sale"
+    },
+    "Photos": [
+      {
+        "PhotoID": 1,
+        "PhotoUri": "https://i.ibb.co/KbGbLYr/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 2,
+        "PhotoUri": "https://i.ibb.co/M16c6Zr/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 3,
+        "PhotoUri": "https://i.ibb.co/8Mpc0wS/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 4,
+        "PhotoUri": "https://i.ibb.co/bm9p52Y/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 5,
+        "PhotoUri": "https://i.ibb.co/Xttf9GC/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 6,
+        "PhotoUri": "https://i.ibb.co/0jf6ND4/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 7,
+        "PhotoUri": "https://i.ibb.co/ZGh570w/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 8,
+        "PhotoUri": "https://i.ibb.co/B2BDTYJ/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 9,
+        "PhotoUri": "https://i.ibb.co/Hqx9G7r/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 10,
+        "PhotoUri": "https://i.ibb.co/LRwJMyG/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 11,
+        "PhotoUri": "https://i.ibb.co/KbGbLYr/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 12,
+        "PhotoUri": "https://i.ibb.co/M16c6Zr/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 13,
+        "PhotoUri": "https://i.ibb.co/8Mpc0wS/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 14,
+        "PhotoUri": "https://i.ibb.co/bm9p52Y/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 15,
+        "PhotoUri": "https://i.ibb.co/Xttf9GC/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 16,
+        "PhotoUri": "https://i.ibb.co/0jf6ND4/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 17,
+        "PhotoUri": "https://i.ibb.co/ZGh570w/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 18,
+        "PhotoUri": "https://i.ibb.co/B2BDTYJ/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 19,
+        "PhotoUri": "https://i.ibb.co/Hqx9G7r/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 20,
+        "PhotoUri": "https://i.ibb.co/LRwJMyG/download.jpg",
+        "VehicleID": 1
+      },
+      {
+        "PhotoID": 21,
+        "PhotoUri": "https://i.ibb.co/xKkWhtc/download.jpg",
+        "VehicleID": 1
+      }
+    ]
+  }
+]

@@ -22,14 +22,9 @@ export class ModelsService {
     return vehicles;
   }
   async findModelById(id: string) {
-    const vehicle = await this.modelsModel
-      .findOne({
-        where: { BrandID: id },
-        include: this.getVehicleDataParams,
-      })
-      .then(async (vehicle) => {
-        return vehicle;
-      });
+    const vehicle = await this.modelsModel.findOne().then(async (vehicle) => {
+      return vehicle;
+    });
 
     return vehicle;
   }

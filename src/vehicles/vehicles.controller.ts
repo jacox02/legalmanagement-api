@@ -45,7 +45,8 @@ export class VehiclesController {
   })
   @HttpCode(200)
   async getVehicle(@Param('id') id: string): Promise<any> {
-    return this.vehicleService.findVehicleBy(id);
+    let data = this.vehicleService.findVehicleBy(id);
+    return data;
   }
 
   @Get('/get/category/:categoryId')

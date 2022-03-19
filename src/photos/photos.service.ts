@@ -7,7 +7,7 @@ import { IResponseMessage } from '../interfaces/response.interface';
 export class PhotosService {
   constructor(
     @InjectModel(Photo)
-    private photoModel: typeof Photo, // private photoModel: typeof Photo,
+    private photoModel: typeof Photo,
   ) {}
 
   async getAll() {
@@ -38,15 +38,16 @@ export class PhotosService {
         code: 200,
         message: 'Photo successfully added',
       };
-      console.log(photo);
 
-      await this.photoModel.create({
-        PhotoID: 0,
-        PhotoUri: photo.PhotoUri,
-        VehicleID: vehicleID,
-      });
+      let photos = await this.photoModel
+        .create({
+          PhotoID: 0,
+          PhotoUri: photo,
+          VehicleID: vehicleID,
+        })
+        .then((result) => result);
 
-      return message;
+      return photos;
     } catch (error) {
       console.log(error);
     }

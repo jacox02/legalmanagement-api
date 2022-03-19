@@ -10,13 +10,13 @@ export class VehicleTypesService {
 
   constructor(
     @InjectModel(VehicleTypes)
-    private modelsModel: typeof VehicleTypes,
+    private vehicleTypes: typeof VehicleTypes,
   ) {
     //NOTE: DEFINE this.getVehicleDataParams with the data we want to query from model model example at Vehicle.service.ts
   }
 
   async getAll() {
-    const vehicles = await this.modelsModel.findAll({
+    const vehicles = await this.vehicleTypes.findAll({
       include: this.getVehicleDataParams,
     });
 
@@ -25,9 +25,9 @@ export class VehicleTypesService {
   async findModelById(id: string) {
     //TODO: Modify this to a vehicle Type SEARCH
 
-    const vehicle = await this.modelsModel
+    const vehicle = await this.vehicleTypes
       .findOne({
-        where: { BrandID: id },
+        where: { VehicleTypeID: id },
         include: this.getVehicleDataParams,
       })
       .then(async (vehicle) => {
@@ -39,7 +39,7 @@ export class VehicleTypesService {
   async getModelsByBrand(id: string) {
     //TODO: Modify this to a vehicle Type SEARCH
 
-    const vehicle = await this.modelsModel
+    const vehicle = await this.vehicleTypes
       .findAll({
         where: { BrandID: id },
         include: this.getVehicleDataParams,
@@ -70,7 +70,7 @@ export class VehicleTypesService {
         message: 'Model successfully added',
       };
       //TODO: Modify this to add vehicle Type
-      // const result = await this.modelsModel.create({
+      // const result = await this.vehicleTypes.create({
       //   ModelID: 0,
       //   ModelCode: model.ModelName.toUpperCase(),
       //   ModelName: model.ModelName,

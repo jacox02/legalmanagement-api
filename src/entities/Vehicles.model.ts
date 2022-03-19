@@ -28,6 +28,12 @@ export class Vehicle extends Model {
   @Column
   VehicleDescription: string;
 
+  @Column({ unique: true })
+  VIN: string;
+
+  @Column({ unique: true })
+  Identifier: string;
+
   @HasMany(() => Photo, { onDelete: 'cascade' })
   Photos: Photo[];
 

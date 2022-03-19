@@ -4,6 +4,7 @@ import {
   Table,
   BelongsTo,
   ForeignKey,
+  DataType,
 } from 'sequelize-typescript';
 import { Vehicle } from './Vehicles.model';
 
@@ -11,6 +12,7 @@ import { Vehicle } from './Vehicles.model';
 export class Photo extends Model {
   @Column({ primaryKey: true, autoIncrement: true })
   PhotoID: number;
+
   @Column
   PhotoUri: string;
 

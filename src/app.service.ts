@@ -1,7 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { Sequelize } from 'sequelize-typescript';
+import { join } from 'path';
 
 @Injectable()
 export class AppService {
-  constructor(private sequelize: Sequelize) {}
+  constructor() {}
+
+  async data(): Promise<any> {
+    console.log({
+      static: join(__dirname, '..', 'client/src/images/'),
+      envFile: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
+      test: process.env.JWT_SECRET,
+    });
+
+    return 'a';
+  }
 }
