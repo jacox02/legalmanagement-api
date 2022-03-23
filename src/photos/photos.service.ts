@@ -32,7 +32,7 @@ export class PhotosService {
 
     return message;
   }
-  async insertPhoto(photo: Photo, vehicleID: number) {
+  async insertPhoto(photo: string, vehicleID: number) {
     try {
       const message: IResponseMessage = {
         code: 200,

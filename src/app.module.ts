@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { User } from './entities/Users.model';
 import { Vehicle } from './entities/Vehicles.model';
@@ -25,7 +25,6 @@ import { AppService } from './app.service';
 import { join } from 'path';
 
 import configuration from './config/configuration';
-
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -38,21 +37,12 @@ import configuration from './config/configuration';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),
-    UsersModule,
-    VehiclesModule,
-    PhotosModule,
-    AuthModule,
-    BrandsModule,
-    ModelsModule,
-    VehicleTypesModule,
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'blackout-dealer-database.ck4xhi6sphki.us-east-1.rds.amazonaws.com',
       username: 'admin',
-      password: 'SIsi11--',
-      autoLoadModels: true,
+      password: 'NOno11--',
       port: 3306,
-      logQueryParameters: false,
       database: 'blackoutdb',
       models: [
         Brand,
@@ -63,12 +53,22 @@ import configuration from './config/configuration';
         ScheduledMeet,
         Photo,
       ],
-      logging: true,
+      // autoLoadModels: true,
+      // logQueryParameters: false,
+      // logging: true,
       // synchronize: true,
       // sync: {
       //   force: true,
       // },
     }),
+    UsersModule,
+    VehiclesModule,
+    PhotosModule,
+    AuthModule,
+    BrandsModule,
+    ModelsModule,
+    VehicleTypesModule,
+
     RouterModule.register([
       { path: 'users', module: UsersModule },
       { path: 'vehicles', module: VehiclesModule },

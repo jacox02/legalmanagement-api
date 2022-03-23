@@ -1,32 +1,53 @@
-import { S3 } from 'aws-sdk';
+import { Injectable, Req, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuid } from 'uuid';
-import fs from 'fs';
+import * as AWS from 'aws-sdk';
+import { Buffer } from 'buffer';
 
-export class FilesService {
-  constructor(private readonly configService: ConfigService) {}
+@Injectable()
+export class S3Service {
+  private _configService: ConfigService;
+  private s3Service: AWS.S3;
 
-  async uploadPublicFile(file: any[], filename: string) {
-    const s3 = new S3({
-      accessKeyId: this.configService.get('aws_settings.aws_access_key_id'),
-      secretAccessKey: this.configService.get('aws_settings.aws_secret_key'),
-      region: this.configService.get('aws_settings.aws_region'),
+  constructor() {
+    this.initialize();
+  }
+
+  private initialize() {
+    this.s3Service = new AWS.S3({
+      accessKeyId: 'AKIATOB6LXCIEQXBNQ7C',
+      secretAccessKey: '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',
+      region: 'us-east-1',
     });
+  }
 
-    // const filesStream = fs.createReadStream(file.path);
+  /*
+   *
+   * Renders an entire login page with email and password fields
+   * using {@link Renderer}.
+   * @public
+   * @abstract Show AWS Data env Data
+   * @param  {string}  base64 Data
+   * @return {string}  Image url
+   *
+   */
 
-    file.map(async () => {
-      const uploadResult = await s3
-        .upload({
-          Bucket: this.configService.get('AWS_PUBLIC_BUCKET_NAME'),
-          Body: file,
-          Key: filename,
-        })
-        .promise();
+  async S3Upload(base64: string, ileIdentifier: string) {
+    let k: string = base64.replace(/^data:image\/\w+;base64,/, '');
+    const base64Data = Buffer.from(k, 'base64');
+    const type = base64.split(';')[0].split('/')[1];
 
-      console.log({ key: uploadResult.Key, url: uploadResult.Location });
-    });
+    const params = {
+      Bucket: 'dealer-images-bucket',
+      Key: ileIdentifier,
+      Body: base64Data,
+      ContentType: type,
+    };
 
-    return 'uploadResult';
+    try {
+      let s3Response = await this.s3Service.upload(params).promise();
+      return s3Response.Location.toString();
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

@@ -34,7 +34,8 @@ export class VehiclesController {
   })
   @HttpCode(200)
   async createVehicle(@Param() params, @Body() vehicle): Promise<any> {
-    return this.vehicleService.insertVehicle(vehicle);
+    let savedCar = await this.vehicleService.insertVehicle(vehicle);
+    return savedCar;
   }
 
   @Get('/get/:id')

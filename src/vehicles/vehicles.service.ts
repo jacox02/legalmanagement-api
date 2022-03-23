@@ -8,14 +8,14 @@ import { VehicleTypes } from 'src/entities/VehicleTypes.model';
 import { IResponseMessage } from '../interfaces/response.interface';
 import { PhotosService } from 'src/photos/photos.service';
 import { Photo } from 'src/entities/Photo.model';
-import { FilesService } from 'src/aws/s3.controller';
+import { S3Service } from 'src/aws/s3.controller';
 import { QueryError } from 'mysql2';
 
 @Injectable()
 export class VehiclesService {
   photoService: PhotosService;
   getVehicleDataParams: object[];
-  filesService: FilesService;
+  filesService: S3Service;
   constructor(
     @InjectModel(Vehicle)
     private vehicleModel: typeof Vehicle,
@@ -41,6 +41,7 @@ export class VehiclesService {
         required: true,
       },
     ];
+    this.filesService = new S3Service();
   }
 
   async getAll() {
@@ -86,11 +87,10 @@ export class VehiclesService {
       } else {
         await this.vehicleModel
           .findAll({
-            where: { TypeID: categoryID, VehicleOnRent: '0' },
+            where: { TypeID: categoryID, VehicleOnRent: '1' },
             include: this.getVehicleDataParams,
           })
           .then((data) => {
-            console.log(data);
             foundVehicles = data;
           })
           .catch((err) => {
@@ -98,7 +98,7 @@ export class VehiclesService {
             return {};
           });
       }
-      //TODO: Fix the Photos model que esta haciendoq ue ciertos vehiculos no aparezcan por el tipo de dato que  tiene
+
       return foundVehicles;
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -126,12 +126,6 @@ export class VehiclesService {
 
       let vehicleIdentifier = `BK-${vehicle.VIN.slice(vehicle.VIN.length - 6)}`;
 
-      this.filesService
-        .uploadPublicFile(vehicle.Photos, `${vehicleIdentifier}`)
-        .then((result) => {
-          console.log(result);
-        });
-
       const result = await this.vehicleModel.create({
         VehicleID: vehicle.VehicleID,
         VehicleYear: vehicle.VehicleYear,
@@ -146,15 +140,19 @@ export class VehiclesService {
         Identifier: vehicleIdentifier,
       });
 
-      vehicle.Photos.map(async (photo) => {
-        await this.photoService.insertPhoto(photo, result.VehicleID);
+      await vehicle.Photos.map(async (photo: any, i: number) => {
+        let fileIdentifier: string = `${vehicle.VIN}-${result.VehicleID}-${i}`;
+
+        await this.filesService
+          .S3Upload(photo, fileIdentifier)
+          .then(async (S3Response: string) => {
+            await this.photoService.insertPhoto(S3Response, result.VehicleID);
+          });
       });
 
       return message;
     } catch (error) {
-      let err: QueryError;
-      err = error;
-      console.log({ a: err });
+      console.log(error);
     }
   }
 }
