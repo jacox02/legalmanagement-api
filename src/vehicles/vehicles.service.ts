@@ -9,8 +9,7 @@ import { IResponseMessage } from '../interfaces/response.interface';
 import { PhotosService } from 'src/photos/photos.service';
 import { Photo } from 'src/entities/Photo.model';
 import { S3Service } from 'src/aws/s3.controller';
-import { QueryError } from 'mysql2';
-
+import { Error } from 'sequelize';
 @Injectable()
 export class VehiclesService {
   photoService: PhotosService;
@@ -118,12 +117,12 @@ export class VehiclesService {
     return message;
   }
   async insertVehicle(vehicle: Vehicle) {
-    try {
-      const message: IResponseMessage = {
-        code: 200,
-        message: 'Vehicle successfully added',
-      };
+    const message: IResponseMessage = {
+      code: 200,
+      message: 'Vehicle successfully added',
+    };
 
+    try {
       let vehicleIdentifier = `BK-${vehicle.VIN.slice(vehicle.VIN.length - 6)}`;
 
       const result = await this.vehicleModel.create({
@@ -139,6 +138,7 @@ export class VehiclesService {
         VIN: vehicle.VIN,
         Identifier: vehicleIdentifier,
       });
+      console.log(result);
 
       await vehicle.Photos.map(async (photo: any, i: number) => {
         let fileIdentifier: string = `${vehicle.VIN}-${result.VehicleID}-${i}`;
@@ -149,10 +149,12 @@ export class VehiclesService {
             await this.photoService.insertPhoto(S3Response, result.VehicleID);
           });
       });
-
-      return message;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      message.message =
+        error.name == 'SequelizeUniqueConstraintError'
+          ? 'Codigo VIN Duplicado'
+          : error.name;
     }
+    return message;
   }
 }
