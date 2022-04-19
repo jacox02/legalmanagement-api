@@ -1,28 +1,28 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { PhotosService } from './photos.service';
+import { BrandsService } from './lawyers.service';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Photo } from 'src/entities/Photo.model';
+import { Lawyer } from 'src/entities/Lawyer.model';
 
-@ApiTags('Photos')
+@ApiTags('Brands')
 @Controller()
-export class PhotosController {
-  constructor(private readonly photosService: PhotosService) {}
+export class BrandsController {
+  constructor(private readonly brandService: BrandsService) {}
 
   @Get('/get/all')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Photo,
+    type: Lawyer,
     isArray: true,
   })
   @HttpCode(200)
   async getAll(): Promise<any> {
-    const data = await this.photosService.getAll();
+    const data = await this.brandService.getAll();
     return data;
   }
 
@@ -30,33 +30,32 @@ export class PhotosController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Photo,
+    type: Lawyer,
   })
   @HttpCode(200)
-  async createVehicle(@Body() photo): Promise<any> {
-    const vehicleID = 1;
-    return this.photosService.insertPhoto(photo, vehicleID);
+  async createVehicle(@Body() lawyer): Promise<any> {
+    return this.brandService.insertLawyer(lawyer);
   }
 
   @Get('/get/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Photo,
+    type: Lawyer,
   })
   @HttpCode(200)
   async getVehicle(@Param('id') id: string): Promise<any> {
-    return this.photosService.findPhotoBy(id);
+    return this.brandService.findLawyerById(id);
   }
 
   @Post('/remove/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Photo,
+    type: Lawyer,
   })
   @HttpCode(200)
   async removeVehicle(@Param('id') id: string): Promise<any> {
-    return this.photosService.removeOne(id);
+    return this.brandService.removeOne(id);
   }
 }

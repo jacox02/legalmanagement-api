@@ -1,29 +1,29 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { ModelsService } from './models.service';
+import { ClientsService } from './clients.service';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { VehicleModel } from 'src/entities/VehicleModels.model';
+import { Client } from 'src/entities/Client.model';
 
 @ApiTags('Models')
 @Controller()
-export class ModelsController {
-  constructor(private readonly modelService: ModelsService) {}
+export class ClientsController {
+  constructor(private readonly clientsService: ClientsService) {}
 
   @Get('/get/all')
   @ApiOperation({ summary: 'Create cat' })
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: VehicleModel,
+    type: Client,
     isArray: true,
   })
   @HttpCode(200)
   async getAll(): Promise<any> {
-    const data = await this.modelService.getAll();
+    const data = await this.clientsService.getAll();
     return data;
   }
 
@@ -31,47 +31,47 @@ export class ModelsController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: VehicleModel,
+    type: Client,
   })
   @ApiOperation({ summary: 'Create cat' })
   @HttpCode(200)
   async createVehicle(@Body() vehicle): Promise<any> {
-    return this.modelService.insertVehicle(vehicle);
+    return this.clientsService.insertVehicle(vehicle);
   }
 
   @Get('/get/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: VehicleModel,
+    type: Client,
   })
   @ApiOperation({ summary: 'Create cat' })
   @HttpCode(200)
   async getVehicle(@Param('id') id: string): Promise<any> {
-    return this.modelService.findModelById(id);
+    return this.clientsService.findClientById(id);
   }
 
-  @Post('/remove/:id')
+  @Get('/remove/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: VehicleModel,
+    type: Client,
   })
   @ApiOperation({ summary: 'Create cat' })
   @HttpCode(200)
   async removeVehicle(@Param('id') id: string): Promise<any> {
-    return this.modelService.removeOne(id);
+    return this.clientsService.removeOne(id);
   }
 
   @Get('/get/brand/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: VehicleModel,
+    type: Client,
   })
   @ApiOperation({ summary: 'Create cat' })
   @HttpCode(200)
   async getModelsByBrand(@Param('id') id: string): Promise<any> {
-    return this.modelService.getModelsByBrand(id);
+    return this.clientsService.getModelsByBrand(id);
   }
 }

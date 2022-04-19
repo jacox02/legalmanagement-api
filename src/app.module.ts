@@ -4,27 +4,21 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { User } from './entities/Users.model';
-import { Vehicle } from './entities/Vehicles.model';
-import { Brand } from './entities/VehicleBrands.model';
-import { VehicleModel } from './entities/VehicleModels.model';
-import { VehicleTypes } from './entities/VehicleTypes.model';
-import { ScheduledMeet } from './entities/ScheduledMeets.model';
-import { Photo } from './entities/Photo.model';
+import { Case } from './entities/Case.model';
+import { Lawyer } from './entities/Lawyer.model';
+import { Client } from './entities/Client.model';
 
-import { AuthModule } from './auth/auth.module';
-import { BrandsModule } from './brands/brands.module';
-import { ModelsModule } from './models/models.module';
-import { VehicleTypesModule } from './vehicletypes/vehicletypes.module';
-import { UsersModule } from './users/users.module';
-import { VehiclesModule } from './vehicles/vehicles.module';
-import { PhotosModule } from './photos/photos.module';
+import { LawyersModule } from './lawyers/lawyers.module';
+import { ClientsModule } from './clients/clients.module';
+import { CasesModule } from './cases/cases.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 
 import configuration from './config/configuration';
+import { CaseType } from './entities/CaseType.model';
+import { MaritalStatus } from './entities/MaritalStatus.model';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -39,20 +33,12 @@ import configuration from './config/configuration';
     }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'blackout-dealer-database.ck4xhi6sphki.us-east-1.rds.amazonaws.com',
-      username: 'admin',
-      password: 'NOno11--',
+      host: '127.0.0.1',
+      username: 'root',
+      password: '5GES85RJFFULX',
       port: 3306,
-      database: 'blackoutdb',
-      models: [
-        Brand,
-        VehicleModel,
-        VehicleTypes,
-        User,
-        Vehicle,
-        ScheduledMeet,
-        Photo,
-      ],
+      database: 'legalmanagement',
+      models: [Lawyer, Client, Case, MaritalStatus, CaseType],
       // autoLoadModels: true,
       // logQueryParameters: false,
       // logging: true,
@@ -61,21 +47,13 @@ import configuration from './config/configuration';
       //   force: true,
       // },
     }),
-    UsersModule,
-    VehiclesModule,
-    PhotosModule,
-    AuthModule,
-    BrandsModule,
-    ModelsModule,
-    VehicleTypesModule,
-
+    LawyersModule,
+    ClientsModule,
+    CasesModule,
     RouterModule.register([
-      { path: 'users', module: UsersModule },
-      { path: 'vehicles', module: VehiclesModule },
-      { path: 'vehicletypes', module: VehicleTypesModule },
-      { path: 'photos', module: PhotosModule },
-      { path: 'brands', module: BrandsModule },
-      { path: 'models', module: ModelsModule },
+      { path: 'lawyers', module: LawyersModule },
+      { path: 'clients', module: ClientsModule },
+      { path: 'cases', module: CasesModule },
       { path: '', module: AppModule },
     ]),
   ],

@@ -1,28 +1,28 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { BrandsService } from './brands.service';
+import { CasesService } from './cases.service';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Brand } from 'src/entities/VehicleBrands.model';
+import { Case } from 'src/entities/Case.model';
 
-@ApiTags('Brands')
+@ApiTags('Vehicles')
 @Controller()
-export class BrandsController {
-  constructor(private readonly brandService: BrandsService) {}
+export class CasesController {
+  constructor(private readonly casesService: CasesService) {}
 
   @Get('/get/all')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Brand,
+    type: Case,
     isArray: true,
   })
   @HttpCode(200)
-  async getAll(): Promise<any> {
-    const data = await this.brandService.getAll();
+  async getAll(@Param() params): Promise<any> {
+    const data = await this.casesService.getAll();
     return data;
   }
 
@@ -30,32 +30,34 @@ export class BrandsController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Brand,
+    type: Case,
   })
   @HttpCode(200)
-  async createVehicle(@Body() vehicle): Promise<any> {
-    return this.brandService.insertVehicle(vehicle);
+  async createCase(@Body() caseToSave): Promise<any> {
+    let savedCase = await this.casesService.insertVehicle(caseToSave);
+    return savedCase;
   }
 
   @Get('/get/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Brand,
+    type: Case,
   })
   @HttpCode(200)
   async getVehicle(@Param('id') id: string): Promise<any> {
-    return this.brandService.findBrandById(id);
+    let data = this.casesService.findCaseByID(id);
+    return data;
   }
 
-  @Post('/remove/:id')
+  @Get('/remove/:id')
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: Brand,
+    type: Case,
   })
   @HttpCode(200)
   async removeVehicle(@Param('id') id: string): Promise<any> {
-    return this.brandService.removeOne(id);
+    return this.casesService.removeOne(id);
   }
 }
