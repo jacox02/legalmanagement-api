@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { CasesService } from './cases.service';
+import { CaseTypeService } from './case-type.service';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -8,10 +8,10 @@ import {
 } from '@nestjs/swagger';
 import { Case } from 'src/entities/Case.model';
 
-@ApiTags('Vehicles')
+@ApiTags('CaseType')
 @Controller()
-export class CasesController {
-  constructor(private readonly casesService: CasesService) {}
+export class CaseTypeController {
+  constructor(private readonly casesTypeService: CaseTypeService) {}
 
   @Get('/get/all')
   @ApiResponse({
@@ -22,7 +22,7 @@ export class CasesController {
   })
   @HttpCode(200)
   async getAll(@Param() params): Promise<any> {
-    const data = await this.casesService.getAll();
+    const data = await this.casesTypeService.getAll();
     return data;
   }
 
@@ -34,7 +34,7 @@ export class CasesController {
   })
   @HttpCode(200)
   async createCase(@Body() caseToSave): Promise<any> {
-    let savedCase = await this.casesService.updateCase(caseToSave);
+    let savedCase = await this.casesTypeService.insertVehicle(caseToSave);
     return savedCase;
   }
 
@@ -46,19 +46,7 @@ export class CasesController {
   })
   @HttpCode(200)
   async getVehicle(@Param('id') id: string): Promise<any> {
-    let data = this.casesService.findCaseByID(id);
-    return data;
-  }
-
-  @Post('/update')
-  @ApiResponse({
-    status: 200,
-    description: 'The found record',
-    type: Case,
-  })
-  @HttpCode(200)
-  async updateVehicle(@Body() caseToUpdate): Promise<any> {
-    let data = this.casesService.updateCase(caseToUpdate);
+    let data = this.casesTypeService.findCaseByID(id);
     return data;
   }
 
@@ -70,12 +58,6 @@ export class CasesController {
   })
   @HttpCode(200)
   async removeVehicle(@Param('id') id: string): Promise<any> {
-    return this.casesService.removeOne(id);
-  }
-
-  @Post('/filter')
-  @HttpCode(200)
-  async filterCases(@Body() body): Promise<any> {
-    return this.casesService.filterCases(body);
+    return this.casesTypeService.removeOne(id);
   }
 }

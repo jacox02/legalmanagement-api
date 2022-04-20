@@ -76,4 +76,32 @@ export class ClientsService {
       console.log(error);
     }
   }
+
+  async updateClient(client: Client) {
+    const message: IResponseMessage = {
+      code: 200,
+      message: 'Caso actualizado con exito',
+    };
+
+    try {
+      let recordId: number = parseInt(client.ClientID.toString());
+
+      Client.findOne({ where: { ClientID: recordId } })
+        .then((record) => {
+          if (!record) {
+            message.message = 'No record found';
+          }
+
+          record.update(client).then(() => {
+            message.message = 'Caso actualizado!';
+          });
+        })
+        .catch((error) => {
+          message.message = error;
+        });
+    } catch (error: any) {
+      message.message = error.name;
+    }
+    return message;
+  }
 }

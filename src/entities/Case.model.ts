@@ -30,10 +30,10 @@ export class Case extends Model {
   @ForeignKey(() => Lawyer)
   LawyerID: Lawyer;
 
-  // @BelongsTo(() => CaseType)
-  // CaseType: CaseType;
-  // @ForeignKey(() => CaseType)
-  // CaseTypeID: CaseType;
+  @BelongsTo(() => CaseType)
+  CaseType: CaseType;
+  @ForeignKey(() => CaseType)
+  CaseTypeID: CaseType;
 
   @BelongsTo(() => Client)
   Client: Client;

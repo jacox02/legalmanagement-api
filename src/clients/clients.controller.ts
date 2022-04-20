@@ -63,7 +63,7 @@ export class ClientsController {
     return this.clientsService.removeOne(id);
   }
 
-  @Get('/get/brand/:id')
+  @Post('/update')
   @ApiResponse({
     status: 200,
     description: 'The found record',
@@ -71,7 +71,8 @@ export class ClientsController {
   })
   @ApiOperation({ summary: 'Create cat' })
   @HttpCode(200)
-  async getModelsByBrand(@Param('id') id: string): Promise<any> {
-    return this.clientsService.getModelsByBrand(id);
+  async updateClient(@Body() caseToUpdate): Promise<any> {
+    let data = this.clientsService.updateClient(caseToUpdate);
+    return data;
   }
 }

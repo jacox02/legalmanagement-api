@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 import { Case } from './entities/Case.model';
 import { Lawyer } from './entities/Lawyer.model';
@@ -19,6 +19,7 @@ import { join } from 'path';
 import configuration from './config/configuration';
 import { CaseType } from './entities/CaseType.model';
 import { MaritalStatus } from './entities/MaritalStatus.model';
+import { CaseTypeModule } from './case-type/case-type.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -27,9 +28,6 @@ import { MaritalStatus } from './entities/MaritalStatus.model';
       envFilePath: '.env',
       isGlobal: true,
       load: [configuration],
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
     }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
@@ -49,11 +47,13 @@ import { MaritalStatus } from './entities/MaritalStatus.model';
     }),
     LawyersModule,
     ClientsModule,
+    CaseTypeModule,
     CasesModule,
     RouterModule.register([
       { path: 'lawyers', module: LawyersModule },
       { path: 'clients', module: ClientsModule },
       { path: 'cases', module: CasesModule },
+      { path: 'types', module: CaseTypeModule },
       { path: '', module: AppModule },
     ]),
   ],
