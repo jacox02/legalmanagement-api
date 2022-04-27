@@ -34,7 +34,7 @@ export class CasesController {
   })
   @HttpCode(200)
   async createCase(@Body() caseToSave): Promise<any> {
-    let savedCase = await this.casesService.updateCase(caseToSave);
+    let savedCase = await this.casesService.insertCase(caseToSave);
     return savedCase;
   }
 
